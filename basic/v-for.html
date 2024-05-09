@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>basic1</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+
+        .card-product{
+            display: flex;
+            flex-direction: row;
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            width: 180px;
+            height: 180px   ;
+            margin-bottom: 30px;
+        }
+        .card .card-thumb{
+            width: 180px;
+            height: auto;
+        }
+        .card.cart{
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello VueJs</h1>
+    <section id="contact">
+        <div class="card-product card-container" class="classTessting">
+            <div class="card" 
+            v-for="product in productsComputed" 
+            :class="{ cart : product.isCart ? 'red' : '' }"
+            @dblclick="onToggleCart($event,product)"
+            >
+               <img class="card-thumb" :src="product.thumb" alt="">
+                <h2>{{product.name}}</h2>
+                <p>{{product.price}}</p>
+            </div>
+          
+        </div>
+    </section>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                classTessting:"flex",
+                products: [
+                    {
+                        thumb:"./img/sp1.1.webp",
+                        name: "San pham 1",
+                        price: 120000,
+                        isCart:false
+                    }, 
+                    {
+                        thumb:"./img/sp1.2.webp",
+                        name: "San pham 2",
+                        price: 200000,
+                        isCart:false
+                    }, 
+                    {
+                        thumb:"./img/sp2.webp",
+                        name: "San pham 3",
+                        price: 220000,
+                        isCart:false
+                    },
+                    {
+                        thumb:"./img/sp3.webp",
+                        name: "San pham 4",
+                        price: 320000,
+                        isCart:true
+                    },
+                ]
+            }
+        },
+        methods: {
+            onToggleCart(event,product){
+                product.isCart=!product.isCart;
+            }
+        },
+        computed:{
+            productsComputed(){
+                return this.products.filter(p=>p.price<300000);
+            }
+        }
+    })
+    app.mount("#contact")
+</script>
+
+</html>
